@@ -54,3 +54,10 @@ exports.addScore = async(req,res)=>{
         })
     }
 }
+
+exports.invalid = async(req,res,next) => {
+    const err = new Error();
+    err.message = 'Invalid Route';
+    err.status = 404;
+    next(err);
+};
