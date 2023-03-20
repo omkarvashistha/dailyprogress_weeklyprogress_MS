@@ -55,6 +55,29 @@ exports.addScore = async(req,res)=>{
     }
 }
 
+exports.getScore = async(req,res)=>{
+    try {
+        const username = req.params.username;
+        const userInfo = await weeklyRepo.find({username : username});
+
+        if(userInfo.length > 0){
+            const score = await helper.getScore(username);
+            res.status(200).json({
+                score : score
+            })
+        } else {
+            res.status(200).json({
+                score : 0
+            })
+        }
+
+    } catch (error) {
+        res.status(400).jspn({
+            data : error.message
+        })
+    }
+}
+
 exports.invalid = async(req,res,next) => {
     const err = new Error();
     err.message = 'Invalid Route';
