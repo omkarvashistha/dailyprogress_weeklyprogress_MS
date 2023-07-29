@@ -23,6 +23,29 @@ exports.getScore = async(username) => {
     }
 }
 
+exports.getWeeklyData = async(username) => {
+    try {
+        const userInfo = await weeklyRepo.find({username : username});
+        const monday = getMonday(new Date());
+
+        let score = [];
+
+        userInfo.forEach(element => {
+            element.weeklyData.forEach(ele => {
+                if(ele.date >= monday) {
+                    score.push(ele.reason);
+                }
+            });
+        })
+
+        return score;
+
+
+    } catch (error) {
+        console.log(error.message);
+    }
+}
+
 exports.getId = async(username) => {
     try {
         const userData = await weeklyRepo.findOne({username : username});

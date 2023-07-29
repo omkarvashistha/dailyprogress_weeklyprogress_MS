@@ -72,7 +72,30 @@ exports.getScore = async(req,res)=>{
         }
 
     } catch (error) {
-        res.status(400).jspn({
+        res.status(400).json({
+            data : error.message
+        })
+    }
+}
+
+exports.getWeeklyData = async(req,res)=>{
+    try {
+        const username = req.params.username;
+        const userInfo = await weeklyRepo.find({username : username});
+
+        if(userInfo.length > 0) {
+            const weeklyData = await helper.getWeeklyData(username);
+            res.status(200).json({
+                weeklydata : weeklyData
+            })
+        } else {
+            res.status(200).json({
+                weeklydata : []
+            })
+        }
+
+    } catch (error) {
+        res.status(400).json({
             data : error.message
         })
     }
