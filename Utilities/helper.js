@@ -29,13 +29,26 @@ exports.getWeeklyData = async(username) => {
         const monday = getMonday(new Date());
 
         let score = [];
-
+        let i=0;
         userInfo.forEach(element => {
+            
+            
+            
             element.weeklyData.forEach(ele => {
+                console.log("tesat",ele);
+                let eleData = [];
                 if(ele.date >= monday) {
-                    score.push(ele.reason);
+                    eleData.push(ele.reason);
+                    eleData.push(ele.date);
+                    eleData.push(ele.points);
+                }
+                
+                if(eleData.length > 0){
+                    score.push(eleData);
                 }
             });
+            
+            
         })
 
         return score;
